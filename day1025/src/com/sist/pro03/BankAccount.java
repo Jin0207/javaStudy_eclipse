@@ -1,7 +1,7 @@
 package com.sist.pro03;
 
 public class BankAccount {
-	int balance;
+	private int balance;
 
 	public BankAccount() {
 		super();
@@ -29,10 +29,10 @@ public class BankAccount {
 		
 		if(money > balance) {
 			throw new NegativeBalanceException("잔액이 부족합니다. 잔액: " + balance);
-		}else {
-			balance = balance - money;
-			System.out.printf("%d원을 출금하였습니다.%n잔액: %d원%n", money, balance);
 		}
+		balance -= money;
+		System.out.printf("%d원을 인출하였습니다.%n잔액: %d원%n", money, balance);
+		
 	}
 	
 }
