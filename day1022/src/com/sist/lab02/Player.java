@@ -4,39 +4,56 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.TreeSet;
 
 public class Player {
+	String[] number = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+	HashMap<String, Integer> map = new HashMap<String, Integer>();
+	//쌍(페어)을 이루는 카드목록을 담아 놓기 위한 리스트 생성
+	public TreeSet<Integer> pairList = new TreeSet<Integer>();
 	//게임을하는 경기자가 CardDeck으로 부터 카드를 하나씩 가져와 담을 리스트
 	private ArrayList<Card> list = new ArrayList<Card>();
-	//카드를 매개변수로 받아 리스트에담음
-	public void getCard(Card card) {
-		list.add(card);
-	}
-
-	//원페어인가? 원페어아니면 0출력
-	public int isOnePair() {
-		String[] number = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
+	
+	public Player(){
 		int value = 2;
 		for(int i = 0; i < number.length; i++) {
 			map.put(number[i], value++);
 		}
-		
+	}
+	//카드를 매개변수로 받아 리스트에담음
+	public void getCard(Card card) {
+		list.add(card);
+	}
+	
+	public int pairProcess(String player) {
 		int n = 0;
 		for(int i = 0; i < list.size(); i++) {
-			int tmp = 0;
 			for(int j = i + 1; j < list.size(); j++) {
 				if(list.get(i).getNumber().equals(list.get(j).getNumber())) {
-					tmp = map.get(list.get(i).getNumber());
+					n = map.get(list.get(i).getNumber());
+					
+					//쌍을 이루는 숫자를 pairList에 담음
+					pairList.add(n);
 				}
 			}
-			if(tmp > n) {
-				n = tmp;
-			}
+		}
+		Iterator<Integer> iter = pairList.iterator();
+		//pairList가 3개일때, 큰값 두개만 뽑아오기
+		if(pairList.size() == 3) {
+			System.out.println(player + "는 투페어 입니다.");
+			iter.next();//0번쨔ㅐ 요소를 꺼내서 버려
+			n = iter.next() + iter.next();
+		}else if(pairList.size() == 2){
+			System.out.println(player + "는 투페어 입니다.");
+			n = iter.next() + iter.next();
+		}else if(pairList.size() == 1){
+			System.out.println(player + "는 원페어 입니다.");
+			n = iter.next();
 		}
 		return n;
 	}
+
 	//투페어
 	public TreeSet<String> isTwoPair() {
 		TreeSet<String> pair = new TreeSet<String>();

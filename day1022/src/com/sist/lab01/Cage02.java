@@ -2,18 +2,6 @@ package com.sist.lab01;
 
 import java.util.ArrayList;
 
-class Animal{
-	
-}
-
-class Lion extends Animal{
-	
-}
-
-class Tiger extends Animal{
-	
-}
-
 public class Cage02 {
 	private Object animal;
 	
