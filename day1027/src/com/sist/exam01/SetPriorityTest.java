@@ -15,14 +15,7 @@ public class SetPriorityTest {
 		im.start();
 		hong.start();
 		
-		//kim, im, hong의 쓰레드가 모두 끝날 때까지 대기시키기
-		try {
-			kim.join();
-			im.join();
-			hong.join();
-		}catch (Exception e) {
-		}
-		
+
 		System.out.println("im의 우선순위" + im.getPriority());
 		System.out.println("kim의 우선순위" + kim.getPriority());
 		System.out.println("hong의 우선순위" + hong.getPriority());

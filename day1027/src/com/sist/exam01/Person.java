@@ -10,7 +10,7 @@ public class Person extends Thread {
 
 	@Override
 	public void run() {
-		for(int i = 1; i<=10; i++) {
+		for(int i = 1; i<=5; i++) {
 			System.out.println("¾È³ç, " + name + "-->" + i);
 			
 			try {
