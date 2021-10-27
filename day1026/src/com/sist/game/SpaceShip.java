@@ -19,20 +19,20 @@ public class SpaceShip extends GraphicObject {
 		
 		// 왼쪽 방향키가 눌러지면 x좌표를 왼쪽으로 이동시킬거임
 		if(event.getKeyCode() == KeyEvent.VK_LEFT) {
-			x -= 10;
+			x -= 20;
 		}
 		
 		// 오른쪽 방향키가 눌러지면 x좌표를 오른쪽으로 이동시킬거임
 		if(event.getKeyCode() == KeyEvent.VK_RIGHT) {
-			x += 10;
+			x += 20;
 		}
 		// 위쪽 방향키가 눌러지면 y좌표를 -10 위쪽으로 이동시킬거임
 		if(event.getKeyCode() == KeyEvent.VK_UP) {
-			y -= 10;
+			y -= 20;
 		}
 		// 아래쪽 방향키가 눌러지면 y좌표를 아래쪽으로 이동시킬거임
 		if(event.getKeyCode() == KeyEvent.VK_DOWN) {
-			y += 10;
+			y += 20;
 		}
 		
 		
