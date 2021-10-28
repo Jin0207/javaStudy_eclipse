@@ -64,7 +64,7 @@ txt파일의 인코딩을 ANSI로 변경하여 저장하기
 	다시 그려주기위한 paintComponent메소드가 자동으로 동작함
 	
 	그래서, 이전에 그려진 "선"들이 모두 사라지고
-	맨마지막에 그린 "선"만 나타남
+	맨마지막에 그린 "선"만 나타남, 
 	
 	이전의 그린 "선"들을 모두 출력하기 위해서는
 	그린 선들을 ArrayList에 선의 정보들을 담아두도록한다.
@@ -137,3 +137,5 @@ int	showSaveDialog(Component parent)
 열기에대한기능
 JFileChooser를 이용해서 열어올 파일을 선택하도록 구현해 봅니다.
 새파일에대한 기능도 구현.
+JColorChooser를 이용하여 그래픽의 색상을 선택하도록 기능추가
+javax.swing.JTextArea를 이용해 메모장프로그램
