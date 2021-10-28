@@ -11,7 +11,6 @@ public class MyPanel extends JPanel implements KeyListener{
 	ArrayList<Enermy> enermyList;
 	SpaceShip spaceship;
 	Missile missile;
-	Explosion explosion;
 	
 	public MyPanel() {
 		super();
