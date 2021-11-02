@@ -3,7 +3,6 @@ package com.sist.gui;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import java.awt.FlowLayout;
-//FlowLayout 이해하기
 public class FlowLayoutTest extends JFrame {
 	
 	public FlowLayoutTest() {

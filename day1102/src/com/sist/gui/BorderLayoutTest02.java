@@ -10,7 +10,7 @@ public class BorderLayoutTest02 extends JFrame {
 		
 		add(new JButton("À§"), BorderLayout.NORTH);
 		//add(new JButton("¾Æ·¡"), BorderLayout.SOUTH);
-		//add(new JButton("ÁÂ"), BorderLayout.WEST);
+		add(new JButton("ÁÂ"), BorderLayout.WEST);
 		//add(new JButton("¿ì"), BorderLayout.EAST);
 		add(new JButton("°¡¿îµ¥"), BorderLayout.CENTER);
 		
