@@ -2,7 +2,8 @@ create table goods(no number primary key,
 item varchar2(30), 
 qty number, 
 price number);
-
+//회원번호, 회원이름, 주소, 나이, 전화번호를 관리하기 위한 데이터베이스 테이블을 생성하고
+create table members(no number primary key, name varchar2(30), addr varchar2(30), age number, phone varchar2(30));
 * primary key : 고유한 키로 중복 x
 ----------------------------------------------------------------
 

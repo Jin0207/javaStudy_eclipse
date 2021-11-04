@@ -1,6 +1,16 @@
 package com.sist.members;
 
 import javax.swing.JButton;
+import java.awt.event.MouseListener;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -77,12 +87,251 @@ public class MembersTest extends JFrame{
 		add(p_center, BorderLayout.CENTER);
 		add(jsp, BorderLayout.SOUTH);
 		
-		setSize(800, 600);
+		setSize(500, 800);
 		setTitle("회원정보조회");
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		btn_add.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int no = Integer.parseInt(jtf_no.getText());
+				String name = jtf_name.getText();
+				String addr = jtf_addr.getText();
+				int age = Integer.parseInt(jtf_age.getText());
+				String phone = jtf_phone.getText();
+				
+				insertMember(no, name, addr, age, phone);
+			}
+		});
+		
+		btn_search.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				printMembers();
+			}
+		});
+		
+		btn_update.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int no = Integer.parseInt(jtf_no.getText());
+				String name = jtf_name.getText();
+				String addr = jtf_addr.getText();
+				int age = Integer.parseInt(jtf_age.getText());
+				String phone = jtf_phone.getText();
+				
+				updateMember(no, name, addr, age, phone);
+			}
+		});
+		
+		btn_delete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int no = Integer.parseInt(jtf_no.getText());
+				String name = jtf_name.getText();
+				String addr = jtf_addr.getText();
+				int age = Integer.parseInt(jtf_age.getText());
+				String phone = jtf_phone.getText();
+				
+				deleteMember(no, name, addr, age, phone);
+			}
+		});
+		
+		table.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				int index = table.getSelectedRow();
+				
+				Vector data = rowData.get(index);
+				
+				jtf_no.setText(data.get(0) + "");
+				jtf_name.setText(data.get(1) + "");
+				jtf_addr.setText(data.get(2) + "");
+				jtf_age.setText(data.get(3) + "");
+				jtf_phone.setText(data.get(4) + "");
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+	}// end 생성자
+	
+	public void deleteMember(int no, String name, String addr, int age, String phone) {
+		String sql = "delete members where no=" + no;
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","c##sist","sist");
+			stmt = conn.createStatement();
+			int re = stmt.executeUpdate(sql);
+			
+			if(re == 1) {
+				System.out.println("삭제를 완료하였습니다.");
+				printMembers();
+				jtfClear();
+			}
+		}catch (Exception e) {
+			System.out.println("예외발생: " + e.getMessage());
+		}finally {
+			try {
+				if(conn != null) conn.close();
+				if(stmt != null) stmt.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 	
+	public void updateMember(int no, String name, String addr, int age, String phone) {
+		
+		String sql = "update members set name='" + name +"', addr='" + addr + "', age=" + age + ", phone=" + phone + "where no="+no;
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","c##sist","sist");
+			stmt = conn.createStatement();
+			int re = stmt.executeUpdate(sql);
+			
+			if(re == 1) {
+				System.out.println("수정을 완료하였습니다.");
+				printMembers();
+				jtfClear();
+			}
+		}catch (Exception e) {
+			System.out.println("예외발생: " + e.getMessage());
+		}finally {
+			try {
+				if(conn != null) conn.close();
+				if(stmt != null) stmt.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+		}//end finally
+		
+	}
+	
+	
+	public void printMembers() {
+		rowData.clear();
+		
+		String sql = "select * from members";
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet re = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","c##sist", "sist");
+			stmt = conn.createStatement();
+			re = stmt.executeQuery(sql);
+			
+			while(re.next()) {
+				int no = re.getInt(1);
+				String name = re.getString(2);
+				String addr = re.getString(3);
+				int age = re.getInt(4);
+				String phone = re.getString(5);
+				
+				Vector v = new Vector();
+				v.add(no);
+				v.add(name);
+				v.add(addr);
+				v.add(age);
+				v.add(phone);
+				
+				rowData.add(v);
+				table.updateUI();
+			}
+			
+		}catch (Exception e) {
+			System.out.println("예외발생: " + e.getMessage());
+		}finally {
+			try {
+				if(conn != null) conn.close();
+				if(stmt != null) stmt.close();
+				if(re != null) re.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+			}//end catch
+		}//end finally
+	}
+	
+	public void insertMember(int no, String name, String addr, int age, String phone) {
+		String sql = "insert into members values(" + no + ",'" + name + "','" + addr + "'," + age + "," + phone + ")";
+		
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","c##sist", "sist");
+			stmt = conn.createStatement();
+			int rs = stmt.executeUpdate(sql);
+			
+			if(rs == 1) {
+				System.out.println("정상 등록하였습니다.");
+				jtfClear();
+				
+				printMembers();
+			}else {
+				System.out.println("등록 실패하였습니다.");
+			}
+		}catch (Exception e) {
+			System.out.println("예외발생:" + e.getMessage());
+		}finally {
+			try {
+				if(conn != null) conn.close();
+				if(stmt != null) stmt.close();
+			}catch (Exception e) {
+			}
+			
+		}//end finally
+	
+	}//end addMember()
+	
+	public void jtfClear() {
+		
+		jtf_no.setText("");
+		jtf_name.setText("");
+		jtf_addr.setText("");
+		jtf_age.setText("");
+		jtf_phone.setText("");
+
+	}
 	public static void main(String[] args) {
 		new MembersTest();
 	}
