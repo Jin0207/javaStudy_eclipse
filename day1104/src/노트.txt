@@ -1,0 +1,139 @@
+create table goods(no number primary key, 
+item varchar2(30), 
+qty number, 
+price number);
+
+* primary key : 고유한 키로 중복 x
+----------------------------------------------------------------
+
+테이블 지우고 싶을 때
+drop table 테이블명
+
+오라클 정보 확인
+:1521:XE
+C:\app\Administrator\product\21c\dbhomeXE\network\admin\sample
+tnsnames.ora ->editplus로 열기
+
+port번호
+
+=-------------------------
+cmd 명령
+ed ff
+edit 파일명
+
+column no format 9999;
+no = 4자리로 입력할거에요
+
+column item format a10;
+스트링타입인 아이템은 10칸을차지할거야
+column price format 999,999;
+가격은 큰 숫자가 나올수 있으니 3자리씩 ,를 할거야
+
+@ff
+파일을 열어줘
+
+select * from goods;
+   NO ITEM         QTY    PRICE
+----- ---------- ----- --------
+    1 색종이        10    1,500
+
+order by no
+저장한 순서대로 가져옴
+"select * from goods order by no"
+
+=========================================================
+JTable(Vector rowData, Vector columnNames)
+
+updateUI(): JTable을 다시그려주셍
+
+JTable 은 column을 원하고 -> 제목표시줄
+
+Vector<String>
+
+rowData를 원해 > Vector
+밑의 데이터의 큰틀 그리고 행도 벡터 그 행의 데이터는 String
+Vector<Vector<String>>
+
+-----------------------------------------------------------------------
+Interface ResultSet
+
+ResultSet의 결과에서 특정레코드를 가리키는 커서가 있다.
+next()
+한행씩 커서를 옮겨감 true
+다음에 레코드가 더이상 없어서 옮겨갈 행이없다면 false
+
+그래서 보통 ResultSet의 결과를 모두 읽어서 처리하려면 
+while(ResultSet변수.next()){
+
+}
+
+현재 커서가 바라보고 있는 레코드의 속성값을 읽어오기 위해서는 자료형에 따라
+get자료형타입()을 사용
+
+칼럼의 값이 문자열이라면 getString()
+칼럼의 값이 정수형이라면 getInt()
+
+이때 매개변수로 컬럼의 인덱스나 컬럼이름을 문자열로 전달한다.
+여기서 인덱스는 1부터 시작한다.
+---------------------------------------------------------------------------------
+
+자료의 수정
+	update 테이블이름 set 컬럼이름 = 값, 칼럼이름 = 값 .. where 컬럼이름 = 값 
+	                     수정될 컬럼들 나열              수정할 레코드?                 
+
+연습) 상품번호가 7번인 상품의 수량은 20, 가격은 2000원, 상품명은 '공책'으로 수정하고 싶다.
+	update goods set qty=20,price=2000,item='공책' where no=7;
+-------------------------------------------------------------------------------------------
+
+자료의 삭제
+	delete 테이블명 where 컬럼이름=값;
+	
+연습) 상품번호가 7번인 상품을 삭제
+	delete goods where no=7;
+
+--------------------------------------
+table.getSelectedRow()
+선택한 행을 가져와 int로 반환
+
+---------------------------------------------------------
+
+데이터베이스에 연결하여
+	C	create
+	R	read
+	U	update
+	D	delete
+
+
+숙제
+
+회원번호, 회원이름, 주소, 나이, 전화번호를 관리하기 위한 데이터베이스 테이블을 생성하고
+CURD가 가능한 프로그램을 작성해보자
+(테이블이름, 칼럼이름, 클래스이름, 변수이름, 화면구성 등은 자유롭게)
+insert먼저 구현하고 나머지를구횬
+
+create table members(no number primary key, 
+name varchar2(10), 
+addr varchar2(30), 
+age number,
+phone varchar2(30));
+
+
+
+예습
+Statement의 후손 클래스인 PreparedStatement에 대하여 조사하고
+오늘 실습한 코드의 상품등록, 상품수정, 상품삭제 기능을
+PreparedStatement를 이용한 것으로 코딩
+
+예습
+데이터베이스 연결 프로그래밍에서 사용되는 DAO에 대하여 알아봅니다.
+
+
+
+
+
+
+
+
+
+
+
