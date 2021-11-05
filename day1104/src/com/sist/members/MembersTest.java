@@ -102,7 +102,7 @@ public class MembersTest extends JFrame{
 				String addr = jtf_addr.getText();
 				int age = Integer.parseInt(jtf_age.getText());
 				String phone = jtf_phone.getText();
-				
+				System.out.println("전화번호:"+phone);
 				insertMember(no, name, addr, age, phone);
 			}
 		});
@@ -167,7 +167,7 @@ public class MembersTest extends JFrame{
 				jtf_name.setText(data.get(1) + "");
 				jtf_addr.setText(data.get(2) + "");
 				jtf_age.setText(data.get(3) + "");
-				jtf_phone.setText(data.get(4) + "");
+				jtf_phone.setText(data.get(4)+"");
 			}
 
 			@Override
@@ -291,7 +291,9 @@ public class MembersTest extends JFrame{
 	}
 	
 	public void insertMember(int no, String name, String addr, int age, String phone) {
-		String sql = "insert into members values(" + no + ",'" + name + "','" + addr + "'," + age + "," + phone + ")";
+		System.out.println("전화번호:" + phone);
+		String sql = "insert into members values(" + no + ",'" + name + "','" + addr + "'," + age + ",'" + phone + "')";
+		//System.out.println(phone);
 		
 		Connection conn = null;
 		Statement stmt = null;

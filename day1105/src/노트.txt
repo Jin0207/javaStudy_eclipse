@@ -1,0 +1,110 @@
+**PreparedStatement
+	데이터베이스 명령어가 떄로는 사용자가 입력한 값으로 명령어를 만들어야 하는 경우가 있다.
+String sql = "update goods set item='" + item + "', qty=" + qty + ", price=" + price + "where no=" +  no;
+
+위의 명령어는 사용자가 입력한 상품명, 수량, 가격, 상품번호를 변수에 담아
+일일이 +로 연결하여 데이터베이스 명령어를 문자열로 만듦
+이때 문자열 데이터를 홋따옴표로 연결해야하고 각 컬럼의 구분은,로 해야하고
+이것을 일일히 +연산으로 연결하는 것은 번거로움
+
+이와같이 사용자가 입력한 변수의 내용으로 데이터베이스 명령어를 만들어야하는 경우
+변수가 들어갈 자리에 ?로 대신하여 데이터베이스 명령어를 만들 수 있다.
+
+String sql = "update goods set item=?,qty=?,price=? where no=?"
+이렇게 하면 데이터 베이스 명령어를 좀 더 간결하게 표현할 수 있다
+또, 이해하기 쉽다
+
+이런경우 Statement의 후손인 PreparedStatement를 사용한다
+PreparedStatement는 생성시에 ?가 있는 데이터베이스 명령어를 매개변수로 전달해야하고
+실행하기 전에 각각의 ?에 해당하는 값을 반드시 설정해야한다.
+
+또, 데이터베이스 명령어를 실행할 때에는
+sql을 전달하지 않아야한다.
+
+<수업들으면서 내가 노트한 부분>
+sql 명령어에서 변수가 들어갈 자리를 ?를 입력할 수 있음 -- ?: 아직 값이 안정해져있다는 의미
+
+
+sql 명렁어안에 ?가 있는 경우 Statement의 후손클래스인 PreparedStatement를 이용
+PreparedStatement 생성시에 ?가 있는 미리 만들어놓은 명령어를 매개변수로 전달해야함
+
+?
+//PreparedStatement 객체에 결정되지 않은 ?에 차례대로 값을 설정
+PreparedStatement
+.set타입
+setString(?의 위치, 스트링);
+
+jdbc에서는 1부터 매겨짐 
+
+--
+sql을 매개변수로 주어 pstmt를 만들엇고
+pstmt = conn.prepareStatement(sql);
+
+pstmt마다 ?의 값을 연결해주었기에
+
+executeUpdate할 땐, sql을 전달하지 않는다.
+만약 여기서 매개변수로 sql을 전달하게 되면, ?값이 정해지지 않은 상태로 명령을 실행함
+
+-----------------------------------------------------------------------------------------------------------
+
+Oracle 포트번호와 서비스명 확인하기
+
+C:\app\hkhao\product\21c\homes\OraDB21Home1\network\admin
+tnsnames.ora 파일
+
+XE =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = DESKTOP-TEJUJN9)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XE)
+    )
+  )
+
+-----------------------------------------------------------------------------------
+
+DAO ==> Database Access Object
+	==> 데이터베이스에 접근하여 자료를 추가, 읽기, 수정, 삭제를 담당하는 객체를 말한다.
+	
+VO(Value Object)
+DTO(Data Transfer Object)
+	Dao한테 일을 하기위해 변수를 전달할 때, 하나의 세트를 만들어 전달하기 위한 객체
+
+
+--------------------------------------------------------------------------------------------
+
+**데이터베이스 연결이 집에서는 잘 되는데 학원에서는 연결
+C:\app\hkhao\product\21c\homes\OraDB21Home1\network\admin
+listener.ora
+tnsnames.ora
+파일에서 host의 ip주소 를 바람직하게 변경하도록
+
+
+LISTENER_XE =
+  (ADDRESS = (PROTOCOL = TCP)(HOST = DESKTOP-TEJUJN9)(PORT = 1521))
+---------------------------------------------------------------------------------------------------------
+
+create table member(
+no number primary key,
+name varchar2(20),
+addr varchar2(50),
+age number,
+phone varchar2(30));
+
+
+--
+도서의 정보를 관리하기 위한 다음과같은 데이터베이스 테이블을 생성하고
+데이터베이스연결 프로그래밍에 필ㅇ한
+vo클래스와 dao클래스를 만들어봅니다
+도서번호,도서명,출판사명,가격
+-------------------------------------------------------------------------------
+학습내용 요약 정리
+
+부서관리를 위한 다음과 같은 데이터베이스 테이블을 생성
+CRUD가 가능한 자바프로그램을 작성
+VO와 DAO를 이용하도록 하며 클래스명, 변수명, 화면구성 등은 자유롭게
+=================================================================================
+
+게시판 만들기
+글번호, 글제목, 작성자, 글내용, 등록일, 조회수 가능하도록
+
