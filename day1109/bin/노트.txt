@@ -1,0 +1,24 @@
+데이터베이스에 연결하는 프로그램을 작성할 때에는 일반적으로
+	- 데이터베이스 테이블과 매칭되는 클래스를 만든다 => VO ( Value Object )
+		ex_ orders 테이블의 속성인
+			orderid, custid, bookid, saleprice, orderdate 으로 구성된 클래스
+			이때, 클래스 이름은 마음대로 정해줄 수 있지만,
+				대체로 테이블명VO으로 만들어준다. OrdersVO
+	
+	- 데이터베이스에 접근(연결)하여
+		테이블에 자료(레코드)를 추가하고, 읽어오고, 수정하고, 삭제하는 메소드를 갖고 있는 클래스를 만듦
+		=>DAO( Database Access Object)
+		
+		테이블이름DAO
+		ex_ordersDAO
+		
+	//메소드는 보통 외부에서 사용해야하니깐 접근제어자를 public으로 해준다
+	
+	현재 문제에서 만들어야할 메소드에서 실행해야할 데이터베이스 명령어(sql)
+		select * from orders where custid=?
+		
+	-> 고객번호를 매개변수로 전달받아 그 고객의 주문내역하나하나는 OvderVO로 만들고
+		그 모든 것을 ArrayList에 담아서 반화하는 메소드를 정의
+		
+		public ArrayList<OrderVO> searchOrders(int custid) // 메소드 시그너쳐
+		
